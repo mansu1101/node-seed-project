@@ -1,7 +1,7 @@
 {
-  "name": "factor-admin",
+  "name": "node-seed-server",
   "version": "1.0.0",
-  "description": "Sekady factor admin server",
+  "description": "Node Seed Server",
   "main": "./build/server.js",
   "scripts": {
     "start:dev": "nodemon",
