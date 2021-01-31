@@ -1,5 +1,3 @@
-'use strict';
-
 class BaseResponse {
 
   private static pageNumber: any;

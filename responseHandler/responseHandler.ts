@@ -1,5 +1,4 @@
-﻿'use strict';
-import responseBuilder from './responseBuilder';
+﻿import responseBuilder from './responseBuilder';
 const errors = require('../errorHandler/errors').Errors();
 const hTTPStatus = require('http-status-codes');
 /*const logger = require('../config/logger');
@@ -7,38 +6,38 @@ const log = logger.LOG;*/
 
 class ResponseHandler {
 
-  private static instance: ResponseHandler;
-
-  static getInstance(): ResponseHandler {
+  public static getInstance(): ResponseHandler {
     if (!ResponseHandler.instance) {
       ResponseHandler.instance = new ResponseHandler();
     }
     return ResponseHandler.instance;
   }
 
+  private static instance: ResponseHandler;
+
   public getStatusByErrorCode(code: number): any {
     switch (code) {
-      case errors.ERROR_NO_RECORD.code: // return 204
-        return hTTPStatus.NO_CONTENT;
+    case errors.ERROR_NO_RECORD.code: // return 204
+      return hTTPStatus.NO_CONTENT;
       // return 401 (Unauthorized) is the session is not valid or expired
-      case errors.ERROR_INVALID_SESSION.code:
-        return hTTPStatus.UNAUTHORIZED;
-      case errors.ERROR_SESSION_EXPIRED.code:
-        return hTTPStatus.UNAUTHORIZED;
-      case errors.ERROR_UNAUTHORIZED.code:
-        return hTTPStatus.UNAUTHORIZED;
-      case errors.ERROR_UNAUTHORIZED_DATABASE_ACCESS.code:
-        return hTTPStatus.UNAUTHORIZED;
+    case errors.ERROR_INVALID_SESSION.code:
+      return hTTPStatus.UNAUTHORIZED;
+    case errors.ERROR_SESSION_EXPIRED.code:
+      return hTTPStatus.UNAUTHORIZED;
+    case errors.ERROR_UNAUTHORIZED.code:
+      return hTTPStatus.UNAUTHORIZED;
+    case errors.ERROR_UNAUTHORIZED_DATABASE_ACCESS.code:
+      return hTTPStatus.UNAUTHORIZED;
       // return 422 for invalid requests
       // Requests which fail unique index (unique-key) constraint
-      case errors.ERROR_RECORD_ALREADY_EXISTS.code:
-        return hTTPStatus.UNPROCESSABLE_ENTITY;
+    case errors.ERROR_RECORD_ALREADY_EXISTS.code:
+      return hTTPStatus.UNPROCESSABLE_ENTITY;
       // Requests which fail business validation
-      case errors.ERROR_INVALID_REQUEST.code:
-        return hTTPStatus.UNPROCESSABLE_ENTITY;
+    case errors.ERROR_INVALID_REQUEST.code:
+      return hTTPStatus.UNPROCESSABLE_ENTITY;
       // Return 500 for all other errors
-      default:
-        return hTTPStatus.INTERNAL_SERVER_ERROR;
+    default:
+      return hTTPStatus.INTERNAL_SERVER_ERROR;
     }
   }
 

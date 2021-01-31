@@ -1,0 +1,10 @@
+.idea
+.vscode
+.nyc_output
+npm-debug.log
+node_modules
+logs
+server/**/*.d.ts
+server/**/*.js.map
+*.d.ts
+*.js.map
