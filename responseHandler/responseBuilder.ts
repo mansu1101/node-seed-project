@@ -39,8 +39,8 @@ class ResponseBuilder {
   }
 }
 // console.log("Kya hai : ", ResponseBuilder.getInstance().PartialSuccessResponse, " kyyyyyyyy", baseResponse);
-util.inherits(ResponseBuilder.getInstance().PartialSuccessResponse, baseResponse);
+/* util.inherits(ResponseBuilder.getInstance().PartialSuccessResponse, baseResponse);
 util.inherits(ResponseBuilder.getInstance().ErrorResponse, baseResponse);
-util.inherits(ResponseBuilder.getInstance().SuccessResponse, baseResponse);
+util.inherits(ResponseBuilder.getInstance().SuccessResponse, baseResponse); */
 
 export default ResponseBuilder.getInstance();
