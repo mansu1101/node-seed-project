@@ -1,0 +1,1 @@
+{"version":3,"sources":["dblayer/contracts/IConnectionManager.ts"],"names":[],"mappings":"","file":"IConnectionManager.js","sourcesContent":["export namespace singleclicktenant.dbLayer.contracts {\n\n    export interface IConnectionManager {\n        getConnection(connectionUrl: string, callback: Function): any\n    }\n}"]}

@@ -1,10 +1,13 @@
 import bodyParser from 'body-parser';
 import express from 'express';
+import passport from 'passport';
 import * as swagger from 'swagger-express-ts';
+import healthController from './controllers/healthController';
+import loginController from './controllers/loginController';
+import userController from './controllers/userController';
 
-import HealthController from './controllers/health.controller';
-import UserController from './controllers/user.controller';
-
+const db = require('./config/database');
+const path = require('path');
 /**
  * The server.
  *
@@ -37,7 +40,8 @@ export class App {
 
     // configure application
     this.config();
-
+    // connecting db at beggning
+    db.setup();
     // configure error handling
     this.errorConfig();
 
@@ -62,6 +66,9 @@ export class App {
       }),
     );
 
+    // intialize passport auth
+    this.app.use(passport.initialize());
+
     this.app.use(swagger.express(
       {
         definition: {
@@ -75,6 +82,7 @@ export class App {
         }
       }
     ));
+    this.app.use(express.static(path.join(__dirname, '../www/dist/')));
   }
 
   /**
@@ -97,8 +105,9 @@ export class App {
    * @method api
    */
   public routes(): void {
-    this.app.use('/health', HealthController.routes());
-    this.app.use('/api/users', new UserController().getRouter());
+    this.app.use('/health', healthController.routes());
+    this.app.use('/api/users', new userController().getRouter());
+    this.app.use('/api/login', loginController.getRouter());
 
     // Docs
     this.app.use('/api-docs/swagger', express.static('server/assets/swagger'));
