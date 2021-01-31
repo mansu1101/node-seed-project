@@ -1,44 +1,16 @@
-import { Mockgoose } from 'mockgoose-fix';
+import mongoose from 'mongoose';
 
-/* es6 import breaks mongoose */
-/* tslint:disable */
-const mongoose = require('mongoose');
-/* tslint:enable */
+module.exports.setup = () => {
+  // Set up default mongoose connection
+  mongoose.connect('mongodb://localhost:27017/TestingDB', {
+    useNewUrlParser: true
+  });
+  // Get Mongoose to use the global promise library
+  mongoose.Promise = global.Promise;
+  // Get the default connection
+  const mongodb = mongoose.connection;
 
-(mongoose as any).Promise = global.Promise;
-
-export const mockgoose = new Mockgoose(mongoose);
-
-// Mock mongoDB on dev and test environments
-
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.NODE_ENV === 'testing'
-) {
-  mockgoose.helper.setDbVersion('3.4.3');
-
-  mockgoose.prepareStorage().then(
-    (): void => {
-      mongoose
-        .connect(
-          'mongodb://example.com:23400/TestingDB',
-          { useNewUrlParser: true }
-        )
-        .then(() => {
-          console.log('connected to database!');
-        })
-        .catch((error: any) => {
-          console.log('Error connecting to database', error);
-        });
-    }
-  );
-} else {
-  const MONGODB_CONNECTION_URL: string = `mongodb://<username>:<password>@<databaseUrl>/<databaseName>`;
-
-  mongoose.connect(
-    MONGODB_CONNECTION_URL,
-    { useNewUrlParser: true }
-  );
-}
-
-export default mongoose;
+  mongodb.on('connected', console.log.bind(console, 'MongoDB successfully connected'));
+  // Bind connection to error event (to get notification of connection errors)
+  mongodb.on('error', console.error.bind(console, 'MongoDB connection error:'));
+};
