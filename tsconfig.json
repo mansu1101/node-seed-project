@@ -3,6 +3,7 @@
     /* Basic Options */
     "target": "ES6",
     "module": "commonjs",
+    "resolveJsonModule": true,
     // We are gonna need experimental decorators for some of our modules
     "experimentalDecorators": true,
     "moduleResolution": "node",

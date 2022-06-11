@@ -77,7 +77,11 @@
       "check-typecast",
       "check-type",
       "check-separator"
-    ]
+    ],
+    "no-var-requires": [
+      false
+    ],
+    "object-literal-sort-keys": false
   },
   "rulesDirectory": [
     "node_modules/tslint-eslint-rules/dist/rules"
